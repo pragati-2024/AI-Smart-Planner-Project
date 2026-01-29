@@ -1,125 +1,93 @@
-# AI Smart Daily Planner 🧠📅
+# AI Smart Daily Planner
 
-## 📌 Project Overview
+A modern, responsive daily planner frontend built with React. It uses a simple “AI rule” (priority → time block) to group tasks into Morning/Afternoon/Evening, supports local login, and adds gamification with points, streaks, and unlockable themes.
 
-AI Smart Daily Planner is an intelligent web-based application designed to help users plan their daily activities in a smart and efficient way. Unlike a normal to-do list, this planner uses AI-based logic to automatically organize tasks based on priority, available time, and productivity patterns.
+## ✅ What’s Included
 
-The main goals of this project are:
+- **Task management:** add, edit, delete, complete
+- **Today’s Plan:** tasks grouped into **Morning / Afternoon / Evening**
+- **Filters:** search, filter by priority/status, sort (Newest/Oldest/Title)
+- **Progress:** total/completed/pending + clear completed/all
+- **Backup:** download/import JSON backup (local only)
+- **Local login (demo):** per-user task storage via email key (no backend)
+- **Rewards:** points + streak tracking + unlockable themes
 
-* Improve time management
-* Increase daily productivity
-* Provide smart task planning suggestions
+## 🧠 AI Scheduling (Rule-Based)
 
----
+- High → Morning
+- Medium → Afternoon
+- Low → Evening
 
-## 🎯 Problem Statement
+## 🎁 Rewards, Points, Streaks & Theme Unlocks
 
-In today’s busy lifestyle, students and working professionals often struggle to manage their daily tasks effectively. Manual planning is time-consuming and often leads to missed deadlines or unfinished important work.
+- Completing a task gives points (only **once per task**):
+  - High: +30
+  - Medium: +20
+  - Low: +10
+- Streak increases when you complete at least 1 task per day.
+- Themes unlock automatically when you reach requirements:
+  - **Dracula Dev**: 120 points
+  - **Nord Dev**: 220 points
+  - **Monokai Dev**: 320 points
+  - **Kawaii Fun**: 7-day streak
+  - **Pixel Fun**: 14-day streak
 
-The AI Smart Daily Planner addresses this problem by:
+Open **Themes** (top bar) to apply unlocked themes.
 
-* Automatically prioritizing tasks
-* Allocating smart time slots
-* Rescheduling pending tasks for the next day
+## 🧰 Tech Stack
 
----
+**Frontend**
 
-## 💡 Solution Description
+- React (Vite + React)
+- JavaScript (ESM)
+- Plain CSS (CSS variables + responsive layout)
 
-In this project, the user can add daily tasks along with:
+**Storage (local only)**
 
-* Task name
-* Priority level (High / Medium / Low)
-* Estimated time
+- localStorage for: user session, tasks (per-user), stats (points/streak), theme
 
-The AI logic analyzes these inputs and generates an optimized daily schedule.
+> Note: This repo currently contains only the frontend (no server/database).
 
-Example:
+## ▶️ Run Locally (Development)
 
-* High priority tasks → Morning (high focus time)
-* Medium priority tasks → Afternoon
-* Low priority tasks → Evening
+From the project root:
 
----
+```bash
+cd frontend
+npm install
+npm run dev
+```
 
-## ✨ Key Features
+Then open:
 
-* Simple and user-friendly interface
-* Add, edit, and delete daily tasks
-* Priority-based task management
-* AI-generated daily schedule
-* Task completion tracking
-* Automatic rescheduling of incomplete tasks
-* Basic productivity insights
+- http://localhost:5173/
 
----
+## 🏗️ Build (Production)
 
-## 🛠️ Technologies Used
+```bash
+cd frontend
+npm run build
+npm run preview
+```
 
-### Frontend
+Or from the root folder (Windows friendly):
 
-* HTML
-* CSS
-* JavaScript
+```bash
+npm --prefix "./frontend" run build
+```
 
-### Backend
+## 🔄 App Workflow (How It Works)
 
-* Node.js
-* Express.js
+1. **Login (local/demo)**: enter name + email → app stores session locally.
+2. **Add Task**: choose priority + estimated time → app assigns a time block using the rule.
+3. **Today’s Plan**: view tasks by time block, use search/filters, edit tasks, complete tasks.
+4. **Rewards**: completing tasks increases points and updates your streak; new themes unlock.
+5. **Progress + Backup**: view completion stats and export/import backups.
 
-### Database
-
-* MongoDB
-
-### AI Logic
-
-* Rule-based AI system (initial implementation)
-* Scalable for future Machine Learning integration
-
----
-
-## ⚙️ How the AI Works (Basic Logic)
-
-The planner follows a rule-based AI approach:
-
-* High priority tasks are scheduled in the morning
-* Medium priority tasks are scheduled in the afternoon
-* Low priority tasks are scheduled in the evening
-* Incomplete tasks are automatically moved to the next day
-
-This approach keeps the system simple, efficient, and beginner-friendly.
-
----
-
-## 🚀 Future Enhancements
-
-* User authentication and profiles
-* Voice-based task input
-* AI/ML-based task duration prediction
-* Calendar integrations (Google Calendar)
-* Mobile application support
-
----
-
-## 👩‍💻 Target Users
-
-* Students
-* Working professionals
-* Freelancers
-* Anyone looking to improve daily productivity
-
----
-
-## 📝 Conclusion
-
-AI Smart Daily Planner is a smart productivity tool that simplifies daily task planning using AI-based logic. This project provides a strong foundation for understanding practical AI concepts and solving real-world time management problems.
-
----
-
-## 📚 Author
+## 👩‍💻 Author
 
 Pragati Bansal
 
 ---
 
-⭐ *This project is developed for learning and academic purposes.*
+This project is developed for learning/portfolio purposes.
