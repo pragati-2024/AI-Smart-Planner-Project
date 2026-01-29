@@ -1,0 +1,174 @@
+:root {
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto,
+    Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  line-height: 1.5;
+  font-weight: 500;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  --radius-sm: 12px;
+  --radius-md: 14px;
+  --radius-lg: 16px;
+
+  --accent: #6366f1;
+  --success: #22c55e;
+  --warning: #f59e0b;
+  --danger: #ef4444;
+}
+
+/* Theme tokens */
+html.theme--light {
+  --bg: #f5f7ff;
+  --text: #0f172a;
+  --muted: rgba(15, 23, 42, 0.65);
+  --border: rgba(148, 163, 184, 0.38);
+  --surface: rgba(255, 255, 255, 0.78);
+  --surfaceSoft: rgba(255, 255, 255, 0.62);
+  --card: rgba(255, 255, 255, 0.92);
+  --cardSoft: rgba(255, 255, 255, 0.80);
+  --shadow: 0 18px 48px rgba(2, 6, 23, 0.10);
+  --shadow-sm: 0 10px 26px rgba(2, 6, 23, 0.08);
+}
+
+html.theme--dark {
+  --bg: #0b1220;
+  --text: rgba(226, 232, 240, 0.96);
+  --muted: rgba(226, 232, 240, 0.72);
+  --border: rgba(148, 163, 184, 0.22);
+  --surface: rgba(15, 23, 42, 0.72);
+  --surfaceSoft: rgba(15, 23, 42, 0.56);
+  --card: rgba(30, 41, 59, 0.72);
+  --cardSoft: rgba(30, 41, 59, 0.56);
+  --shadow: 0 18px 48px rgba(0, 0, 0, 0.38);
+  --shadow-sm: 0 10px 26px rgba(0, 0, 0, 0.28);
+}
+
+/* Coder themes */
+html.theme--dracula {
+  --accent: #a78bfa;
+  --success: #22c55e;
+  --warning: #fbbf24;
+  --danger: #fb7185;
+
+  --bg: #0b1020;
+  --text: rgba(235, 236, 244, 0.96);
+  --muted: rgba(235, 236, 244, 0.70);
+  --border: rgba(167, 139, 250, 0.22);
+  --surface: rgba(22, 24, 39, 0.72);
+  --surfaceSoft: rgba(22, 24, 39, 0.56);
+  --card: rgba(31, 35, 56, 0.72);
+  --cardSoft: rgba(31, 35, 56, 0.56);
+  --shadow: 0 18px 48px rgba(0, 0, 0, 0.42);
+  --shadow-sm: 0 10px 26px rgba(0, 0, 0, 0.30);
+}
+
+html.theme--nord {
+  --accent: #5e81ac;
+  --success: #a3be8c;
+  --warning: #ebcb8b;
+  --danger: #bf616a;
+
+  --bg: #0b1320;
+  --text: rgba(236, 239, 244, 0.96);
+  --muted: rgba(236, 239, 244, 0.70);
+  --border: rgba(94, 129, 172, 0.24);
+  --surface: rgba(16, 26, 39, 0.74);
+  --surfaceSoft: rgba(16, 26, 39, 0.58);
+  --card: rgba(25, 38, 56, 0.74);
+  --cardSoft: rgba(25, 38, 56, 0.58);
+  --shadow: 0 18px 48px rgba(0, 0, 0, 0.40);
+  --shadow-sm: 0 10px 26px rgba(0, 0, 0, 0.28);
+}
+
+html.theme--monokai {
+  --accent: #a6e22e;
+  --success: #22c55e;
+  --warning: #f59e0b;
+  --danger: #f43f5e;
+
+  --bg: #0a0c0f;
+  --text: rgba(244, 244, 245, 0.96);
+  --muted: rgba(244, 244, 245, 0.68);
+  --border: rgba(166, 226, 46, 0.18);
+  --surface: rgba(20, 22, 26, 0.72);
+  --surfaceSoft: rgba(20, 22, 26, 0.56);
+  --card: rgba(32, 35, 41, 0.74);
+  --cardSoft: rgba(32, 35, 41, 0.56);
+  --shadow: 0 18px 48px rgba(0, 0, 0, 0.48);
+  --shadow-sm: 0 10px 26px rgba(0, 0, 0, 0.34);
+}
+
+/* Fun / childish themes */
+html.theme--kawaii {
+  --accent: #ff4d8d;
+  --success: #22c55e;
+  --warning: #f59e0b;
+  --danger: #ef4444;
+
+  --bg: #fff3fb;
+  --text: #1f2937;
+  --muted: rgba(31, 41, 55, 0.62);
+  --border: rgba(255, 77, 141, 0.20);
+  --surface: rgba(255, 255, 255, 0.80);
+  --surfaceSoft: rgba(255, 255, 255, 0.64);
+  --card: rgba(255, 255, 255, 0.92);
+  --cardSoft: rgba(255, 255, 255, 0.82);
+  --shadow: 0 18px 48px rgba(255, 77, 141, 0.14);
+  --shadow-sm: 0 10px 26px rgba(255, 77, 141, 0.10);
+}
+
+html.theme--pixel {
+  --accent: #7c3aed;
+  --success: #22c55e;
+  --warning: #f97316;
+  --danger: #ef4444;
+
+  --bg: #f3f0ff;
+  --text: #111827;
+  --muted: rgba(17, 24, 39, 0.62);
+  --border: rgba(124, 58, 237, 0.22);
+  --surface: rgba(255, 255, 255, 0.82);
+  --surfaceSoft: rgba(255, 255, 255, 0.66);
+  --card: rgba(255, 255, 255, 0.94);
+  --cardSoft: rgba(255, 255, 255, 0.84);
+  --shadow: 0 18px 48px rgba(124, 58, 237, 0.14);
+  --shadow-sm: 0 10px 26px rgba(124, 58, 237, 0.10);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  overflow-x: hidden;
+}
+
+:focus-visible {
+  outline: 3px solid rgba(99, 102, 241, 0.55);
+  outline-offset: 2px;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+a {
+  color: inherit;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
