@@ -850,7 +850,8 @@
 .modalOverlay {
   position: fixed;
   inset: 0;
-  background: rgba(15, 23, 42, 0.42);
+  background: rgba(2, 6, 23, 0.68);
+  backdrop-filter: blur(10px);
   display: grid;
   place-items: center;
   padding: 18px;
@@ -861,7 +862,8 @@
   width: min(640px, 100%);
   border: 1px solid var(--border);
   border-radius: 22px;
-  background: var(--surface);
+  /* Use a more opaque surface so text stays readable over glassy UIs */
+  background: color-mix(in srgb, var(--surface) 88%, var(--bg));
   box-shadow: var(--shadow);
   overflow: hidden;
 }
@@ -873,7 +875,7 @@
   gap: 10px;
   padding: 14px 14px 10px;
   border-bottom: 1px solid var(--border);
-  background: color-mix(in srgb, var(--surfaceSoft) 72%, transparent);
+  background: color-mix(in srgb, var(--surfaceSoft) 78%, var(--bg));
 }
 
 .modal__title {
@@ -891,7 +893,7 @@
   height: 38px;
   border-radius: 12px;
   border: 1px solid var(--border);
-  background: var(--card);
+  background: color-mix(in srgb, var(--card) 88%, var(--bg));
   color: var(--text);
   cursor: pointer;
   display: grid;
@@ -921,7 +923,7 @@
 
 .themeStat {
   border: 1px solid var(--border);
-  background: var(--card);
+  background: color-mix(in srgb, var(--card) 90%, var(--bg));
   border-radius: 16px;
   padding: 10px;
 }
@@ -946,7 +948,7 @@
 
 .themeTab {
   border: 1px solid var(--border);
-  background: var(--card);
+  background: color-mix(in srgb, var(--card) 90%, var(--bg));
   color: var(--text);
   border-radius: 999px;
   padding: 8px 12px;
@@ -968,7 +970,7 @@
 .themeCard {
   text-align: left;
   border: 1px solid var(--border);
-  background: var(--card);
+  background: color-mix(in srgb, var(--card) 90%, var(--bg));
   border-radius: 18px;
   padding: 12px;
   cursor: pointer;
@@ -977,7 +979,7 @@
 }
 
 .themeCard--locked {
-  opacity: 0.70;
+  opacity: 0.82;
   cursor: not-allowed;
 }
 
