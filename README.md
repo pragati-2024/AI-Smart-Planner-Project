@@ -1,4 +1,4 @@
-# AI Smart Daily Planner
+# AI Smart Planner
 
 A modern daily planner with a React (Vite) frontend and an Express + MongoDB backend.
 It uses a simple “AI rule” (priority → time block) to group tasks into Morning/Afternoon/Evening, supports a demo local login, and adds gamification with points, streaks, and unlockable themes.
@@ -70,12 +70,11 @@ npm run dev
 
 Create a `backend/.env` file (do not commit it):
 
-```bash
-PORT=5000
-MONGODB_URI=<your-mongodb-uri>
-# Optional (comma-separated): CORS_ORIGIN=http://localhost:5173
-CORS_ORIGIN=
-```
+Add your environment values inside `backend/.env` (keep secrets here; never push this file). You will need:
+
+- `PORT`
+- `MONGODB_URI`
+- (Optional) `CORS_ORIGIN`
 
 Backend runs on `http://localhost:5000`.
 
@@ -101,9 +100,7 @@ The frontend calls the backend at `/api/*` using Vite's dev proxy (see `frontend
 
 If you want to run without the Vite proxy (or for production builds), create `frontend/.env`:
 
-```bash
-VITE_API_URL=http://localhost:5000
-```
+Put your backend URL in `frontend/.env` (do not commit it), e.g. set `VITE_API_URL`.
 
 ## 🏗️ Build (Production)
 
@@ -133,4 +130,4 @@ Pragati Bansal
 
 ---
 
-This project is developed for learning/portfolio purposes.
+AI Smart Planner.
