@@ -72,7 +72,7 @@ Create a `backend/.env` file (do not commit it):
 
 ```bash
 PORT=5000
-MONGODB_URI=mongodb://127.0.0.1:27017/ai_smart_planner
+MONGODB_URI=<your-mongodb-uri>
 # Optional (comma-separated): CORS_ORIGIN=http://localhost:5173
 CORS_ORIGIN=
 ```
