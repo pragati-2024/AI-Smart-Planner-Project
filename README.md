@@ -124,10 +124,6 @@ npm --prefix "./frontend" run build
 4. **Rewards**: completing tasks increases points and updates your streak; new themes unlock.
 5. **Progress + Backup**: view completion stats and export/import backups.
 
-## 👩‍💻 Author
-
-Pragati Bansal
-
 ---
 
 AI Smart Planner.
