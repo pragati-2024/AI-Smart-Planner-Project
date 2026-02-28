@@ -1,6 +1,7 @@
 # AI Smart Daily Planner
 
-A modern, responsive daily planner frontend built with React. It uses a simple “AI rule” (priority → time block) to group tasks into Morning/Afternoon/Evening, supports local login, and adds gamification with points, streaks, and unlockable themes.
+A modern daily planner with a React (Vite) frontend and an Express + MongoDB backend.
+It uses a simple “AI rule” (priority → time block) to group tasks into Morning/Afternoon/Evening, supports a demo local login, and adds gamification with points, streaks, and unlockable themes.
 
 ## ✅ What’s Included
 
@@ -38,19 +39,53 @@ Open **Themes** (top bar) to apply unlocked themes.
 
 **Frontend**
 
-- React (Vite + React)
-- JavaScript (ESM)
-- Plain CSS (CSS variables + responsive layout)
+- React (Vite)
+- Plain CSS (CSS variables)
 
-**Storage (local only)**
+**Backend**
 
-- localStorage for: user session, tasks (per-user), stats (points/streak), theme
+- Node.js + Express
+- MongoDB (via Mongoose)
 
-> Note: This repo currently contains only the frontend (no server/database).
+**Data / Auth**
+
+- Demo login stored in `localStorage` (name + email)
+- Tasks are stored in MongoDB, scoped by email
+- Stats (points/streak) + theme selection are stored in `localStorage`
 
 ## ▶️ Run Locally (Development)
 
-From the project root:
+### 0) Prerequisites
+
+- Node.js 18+
+- MongoDB running locally (or a MongoDB URI)
+
+### 1) Backend
+
+```bash
+cd backend
+npm install
+npm run dev
+```
+
+Create a `backend/.env` file (do not commit it):
+
+```bash
+PORT=5000
+MONGODB_URI=mongodb://127.0.0.1:27017/ai_smart_planner
+# Optional (comma-separated): CORS_ORIGIN=http://localhost:5173
+CORS_ORIGIN=
+```
+
+Backend runs on `http://localhost:5000`.
+
+Health check:
+
+- `GET http://localhost:5000/api/health`
+
+### 2) Frontend
+
+In a new terminal:
 
 ```bash
 cd frontend
@@ -58,9 +93,17 @@ npm install
 npm run dev
 ```
 
-Then open:
+Frontend runs on `http://localhost:5173`.
 
-- http://localhost:5173/
+The frontend calls the backend at `/api/*` using Vite's dev proxy (see `frontend/vite.config.js`).
+
+### Optional: Configure API base URL
+
+If you want to run without the Vite proxy (or for production builds), create `frontend/.env`:
+
+```bash
+VITE_API_URL=http://localhost:5000
+```
 
 ## 🏗️ Build (Production)
 

@@ -9,10 +9,17 @@ import Login from './pages/Login.jsx'
 import RewardToast from './components/RewardToast.jsx'
 import ThemePickerModal from './components/ThemePickerModal.jsx'
 import { getTimeBlockFromPriority } from './utils/ai.js'
-import { loadTasks, saveTasks } from './utils/storage.js'
 import { clearUser, loadUser, saveUser } from './utils/auth.js'
 import { applyTheme, loadTheme, saveTheme, THEMES } from './utils/theme.js'
 import { awardCompletion, loadStats, saveStats } from './utils/gamification.js'
+import {
+  clearAllTasks as apiClearAllTasks,
+  createTask as apiCreateTask,
+  deleteTask as apiDeleteTask,
+  fetchTasks as apiFetchTasks,
+  patchTask as apiPatchTask,
+  replaceAllTasks as apiReplaceAllTasks,
+} from './utils/tasksApi.js'
 import './styles/app.css'
 
 // Main app shell.
@@ -37,9 +44,8 @@ export default function App() {
   })
   const [isThemeModalOpen, setIsThemeModalOpen] = useState(false)
 
-  const tasksStorageKey = useMemo(() => {
-    if (!user?.email) return null
-    return `ai-smart-daily-planner.tasks.v1::${String(user.email).toLowerCase()}`
+  const userEmail = useMemo(() => {
+    return user?.email ? String(user.email).trim().toLowerCase() : null
   }, [user])
 
   const statsStorageKey = useMemo(() => {
@@ -101,18 +107,20 @@ export default function App() {
 
   // Load tasks whenever user changes.
   useEffect(() => {
-    if (!tasksStorageKey) {
+    if (!userEmail) {
       setTasks([])
       return
     }
-    setTasks(loadTasks(tasksStorageKey))
-  }, [tasksStorageKey])
-
-  // Persist tasks to localStorage whenever tasks change.
-  useEffect(() => {
-    if (!tasksStorageKey) return
-    saveTasks(tasksStorageKey, tasks)
-  }, [tasks, tasksStorageKey])
+    ;(async () => {
+      try {
+        const loaded = await apiFetchTasks(userEmail)
+        setTasks(Array.isArray(loaded) ? loaded : [])
+      } catch (err) {
+        console.error(err)
+        setTasks([])
+      }
+    })()
+  }, [userEmail])
 
   function navigate(viewKey) {
     setActiveView(viewKey)
@@ -196,14 +204,22 @@ export default function App() {
       timeBlock,
       completed: false,
       createdAt: Date.now(),
+      rewardedAt: null,
     }
 
     setTasks((prev) => [newTask, ...prev])
+
+    if (userEmail) {
+      apiCreateTask(userEmail, newTask).catch((err) => console.error(err))
+    }
+
     setActiveView('today')
     if (isMobile) setIsSidebarOpen(false)
   }
 
   function toggleComplete(taskId) {
+    let patchForApi = null
+
     setTasks((prev) => {
       let rewardPayload = null
       let statsAward = null
@@ -230,7 +246,9 @@ export default function App() {
         // Prevent points farming: only award once per task.
         const rewardedAt = !t.completed && nextCompleted && !alreadyRewarded ? Date.now() : t.rewardedAt
 
-        return { ...t, completed: nextCompleted, rewardedAt }
+        const updated = { ...t, completed: nextCompleted, rewardedAt }
+        patchForApi = { id: updated.id, completed: updated.completed, rewardedAt: updated.rewardedAt }
+        return updated
       })
 
       if (rewardPayload) setReward(rewardPayload)
@@ -243,11 +261,30 @@ export default function App() {
       }
       return next
     })
+
+    if (userEmail && patchForApi?.id) {
+      apiPatchTask(userEmail, patchForApi.id, {
+        completed: patchForApi.completed,
+        rewardedAt: patchForApi.rewardedAt,
+      }).catch((err) => console.error(err))
+    }
   }
 
   function updateTask(updatedTask) {
     if (!updatedTask?.id) return
     setTasks((prev) => prev.map((t) => (t.id === updatedTask.id ? updatedTask : t)))
+
+    if (userEmail) {
+      apiPatchTask(userEmail, updatedTask.id, {
+        title: updatedTask.title,
+        description: updatedTask.description,
+        priority: updatedTask.priority,
+        estimatedTime: updatedTask.estimatedTime,
+        timeBlock: updatedTask.timeBlock,
+        completed: updatedTask.completed,
+        rewardedAt: updatedTask.rewardedAt,
+      }).catch((err) => console.error(err))
+    }
   }
 
   function deleteTask(taskId) {
@@ -257,6 +294,10 @@ export default function App() {
     )
     if (!ok) return
     setTasks((prev) => prev.filter((t) => t.id !== taskId))
+
+    if (userEmail) {
+      apiDeleteTask(userEmail, taskId).catch((err) => console.error(err))
+    }
   }
 
   function clearCompletedTasks() {
@@ -264,7 +305,12 @@ export default function App() {
     if (completedCount === 0) return
     const ok = window.confirm(`Clear ${completedCount} completed task(s)?`)
     if (!ok) return
-    setTasks((prev) => prev.filter((t) => !t.completed))
+
+    const remaining = tasks.filter((t) => !t.completed)
+    setTasks(remaining)
+    if (userEmail) {
+      apiReplaceAllTasks(userEmail, remaining).catch((err) => console.error(err))
+    }
   }
 
   function clearAllTasks() {
@@ -274,6 +320,10 @@ export default function App() {
     )
     if (!ok) return
     setTasks([])
+
+    if (userEmail) {
+      apiClearAllTasks(userEmail).catch((err) => console.error(err))
+    }
   }
 
   function importTasks(nextTasks) {
@@ -303,6 +353,11 @@ export default function App() {
     )
     if (!ok) return
     setTasks(normalized)
+
+    if (userEmail) {
+      apiReplaceAllTasks(userEmail, normalized).catch((err) => console.error(err))
+    }
+
     setActiveView('today')
     if (isMobile) setIsSidebarOpen(false)
   }

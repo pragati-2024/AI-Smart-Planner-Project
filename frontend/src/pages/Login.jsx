@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-// Login page (local-only demo).
+// Login page.
 // Stores a user session in localStorage via App.jsx handlers.
 export default function Login({ onLogin }) {
   const [name, setName] = useState('')
@@ -35,7 +35,7 @@ export default function Login({ onLogin }) {
           <div className="loginBadge">AI</div>
           <div>
             <h2 className="loginTitle">Welcome back</h2>
-            <p className="loginSubtitle">Login to save tasks per user (localStorage).</p>
+            <p className="loginSubtitle">Login to save tasks per user.</p>
           </div>
         </div>
 
@@ -71,7 +71,7 @@ export default function Login({ onLogin }) {
             <button className="btn btn--primary" type="submit">
               Login
             </button>
-            <div className="formHint">No backend — saved locally only.</div>
+            <div className="formHint">Your tasks will sync to the server.</div>
           </div>
         </form>
       </div>
