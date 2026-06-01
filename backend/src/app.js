@@ -3,6 +3,8 @@ import cors from "cors";
 
 import healthRouter from "./routes/health.js";
 import tasksRouter from "./routes/tasks.js";
+import authRouter from "./routes/auth.js";
+import { requireAuth } from "./middleware/requireAuth.js";
 
 export function createApp() {
   const app = express();
@@ -20,7 +22,8 @@ export function createApp() {
   app.use(express.json({ limit: "1mb" }));
 
   app.use("/api/health", healthRouter);
-  app.use("/api/tasks", tasksRouter);
+  app.use("/api/auth", authRouter);
+  app.use("/api/tasks", requireAuth, tasksRouter);
 
   app.use((req, res) => {
     res.status(404).json({ error: "Not Found" });

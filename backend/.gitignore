@@ -1,6 +1,11 @@
 node_modules
+
+# Ignore real env files
 .env
-.env.*
+
+# Allow env example file
+!.env.example
+
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*

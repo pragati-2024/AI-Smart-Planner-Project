@@ -25,8 +25,11 @@ function pickTask(doc) {
 
 router.get("/", async (req, res, next) => {
   try {
-    const email = normalizeEmail(req.query.email);
-    if (!email) return res.status(400).json({ error: "Missing email" });
+    const email = normalizeEmail(req.user?.email);
+    const requested = normalizeEmail(req.query.email);
+    if (requested && requested !== email) {
+      return res.status(403).json({ error: "Forbidden" });
+    }
 
     const tasks = await Task.find({ userEmail: email })
       .sort({ createdAt: -1 })
@@ -39,8 +42,11 @@ router.get("/", async (req, res, next) => {
 
 router.post("/", async (req, res, next) => {
   try {
-    const email = normalizeEmail(req.body?.email);
-    if (!email) return res.status(400).json({ error: "Missing email" });
+    const email = normalizeEmail(req.user?.email);
+    const requested = normalizeEmail(req.body?.email);
+    if (requested && requested !== email) {
+      return res.status(403).json({ error: "Forbidden" });
+    }
 
     const id = String(req.body?.id || "").trim();
     const title = String(req.body?.title || "").trim();
@@ -73,8 +79,11 @@ router.post("/", async (req, res, next) => {
 
 router.patch("/:id", async (req, res, next) => {
   try {
-    const email = normalizeEmail(req.body?.email || req.query.email);
-    if (!email) return res.status(400).json({ error: "Missing email" });
+    const email = normalizeEmail(req.user?.email);
+    const requested = normalizeEmail(req.body?.email || req.query.email);
+    if (requested && requested !== email) {
+      return res.status(403).json({ error: "Forbidden" });
+    }
 
     const id = String(req.params.id || "").trim();
     if (!id) return res.status(400).json({ error: "Missing id" });
@@ -125,8 +134,11 @@ router.patch("/:id", async (req, res, next) => {
 
 router.delete("/:id", async (req, res, next) => {
   try {
-    const email = normalizeEmail(req.query.email || req.body?.email);
-    if (!email) return res.status(400).json({ error: "Missing email" });
+    const email = normalizeEmail(req.user?.email);
+    const requested = normalizeEmail(req.query.email || req.body?.email);
+    if (requested && requested !== email) {
+      return res.status(403).json({ error: "Forbidden" });
+    }
 
     const id = String(req.params.id || "").trim();
     if (!id) return res.status(400).json({ error: "Missing id" });
@@ -143,8 +155,11 @@ router.delete("/:id", async (req, res, next) => {
 
 router.delete("/", async (req, res, next) => {
   try {
-    const email = normalizeEmail(req.query.email || req.body?.email);
-    if (!email) return res.status(400).json({ error: "Missing email" });
+    const email = normalizeEmail(req.user?.email);
+    const requested = normalizeEmail(req.query.email || req.body?.email);
+    if (requested && requested !== email) {
+      return res.status(403).json({ error: "Forbidden" });
+    }
 
     await Task.deleteMany({ userEmail: email });
     res.status(204).send();
@@ -155,8 +170,11 @@ router.delete("/", async (req, res, next) => {
 
 router.put("/replace", async (req, res, next) => {
   try {
-    const email = normalizeEmail(req.body?.email);
-    if (!email) return res.status(400).json({ error: "Missing email" });
+    const email = normalizeEmail(req.user?.email);
+    const requested = normalizeEmail(req.body?.email);
+    if (requested && requested !== email) {
+      return res.status(403).json({ error: "Forbidden" });
+    }
 
     const tasks = Array.isArray(req.body?.tasks) ? req.body.tasks : null;
     if (!tasks) return res.status(400).json({ error: "Missing tasks" });

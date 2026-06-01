@@ -1,3 +1,5 @@
+import { loadUser } from "./auth.js";
+
 function getApiBase() {
   try {
     const raw = import.meta?.env?.VITE_API_URL;
@@ -8,6 +10,16 @@ function getApiBase() {
   }
 }
 
+function getAuthHeaders() {
+  try {
+    const token = loadUser()?.token;
+    if (!token) return {};
+    return { Authorization: `Bearer ${token}` };
+  } catch {
+    return {};
+  }
+}
+
 async function requestJson(path, options) {
   const apiBase = getApiBase();
   const url = apiBase ? `${apiBase}${path}` : path;
@@ -15,6 +27,7 @@ async function requestJson(path, options) {
   const res = await fetch(url, {
     headers: {
       "Content-Type": "application/json",
+      ...getAuthHeaders(),
       ...(options?.headers || {}),
     },
     ...options,

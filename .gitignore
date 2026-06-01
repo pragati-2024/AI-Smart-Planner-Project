@@ -1,9 +1,10 @@
 # Dependencies
 node_modules
 
-# Env (never commit keys)
+# Env files
 .env
-.env.*
+backend/.env
+frontend/.env
 
 # Build outputs
 /dist

@@ -14,7 +14,7 @@ dist-ssr
 
 # Env (never commit keys)
 .env
-.env.*
+!.env.example
 
 # Editor directories and files
 .vscode/*
